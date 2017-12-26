@@ -60,6 +60,16 @@ def settings(conf):
             out.append('set nativeMode := "{}"'.format(value))
         elif key == 'gc':
             out.append('set nativeGC := "{}"'.format(value))
+        elif key == 'llvm':
+            out.append('set disableLLVM := "{}"'.format(value))
+        elif key == 'depth':
+            out.append('set inliningDepth := {}'.format(value))
+        elif key == 'methodSize':
+            out.append('set maxMethodSize := {}'.format(value))
+        elif key == 'inliningThreshold':
+            out.append('set inliningThreshold := {}'.format(value))
+        elif key == 'disableLLVM':
+            out.append('set disableLLVM := {}'.format(value))
         else:
             raise Exception('Unkown configuration key: ' + key)
     return out
@@ -67,10 +77,15 @@ def settings(conf):
 def conf(**kwargs):
     return kwargs
 
-configurations = [
-        conf(name='0.3.3-immix', native='0.3.3', clang='5.0', scala='2.11.11', mode='release', gc='immix'),
-        conf(name='0.3.4-immix', native='0.3.4', clang='5.0', scala='2.11.11', mode='release', gc='immix'),
-]
+configurations = [ ]
+
+for gc in ['immix', 'none', 'boehm']:
+    for disableLLVM in ['true', 'false']:
+        for depth in range(3):
+            for maxMethodSize in range(8000, 250000, 2000):
+                for inliningPower in range(11):
+                    inliningThreshold = 2 ** inliningPower
+                    configurations.append(conf(name='GC: {} LLVM: {} Depth: {} MethodSize: {} InliningThreshold: {}'.format(gc, disableLLVM, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM))
 
 benchmarks = [
         'bounce',
