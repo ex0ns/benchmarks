@@ -88,7 +88,7 @@ for gc in ['immix', 'none', 'boehm']:
                 for maxMethodSize in range(8000, 250000, 2000):
                     for inliningPower in range(11):
                         inliningThreshold = 2 ** inliningPower
-                        configurations.append(conf(name='GC: {} LLVM: {} Depth: {} MethodSize: {} InliningThreshold: {}'.format(gc, disableLLVM, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
+                        configurations.append(conf(name='GC: {} DisableLLVM: {} DisableEscape: {} Depth: {} MethodSize: {} InliningThreshold: {}'.format(gc, disableLLVM, disableEscape, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
 
 benchmarks = [
         'bounce',
