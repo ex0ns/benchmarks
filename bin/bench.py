@@ -70,6 +70,8 @@ def settings(conf):
             out.append('set inliningThreshold := {}'.format(value))
         elif key == 'disableLLVM':
             out.append('set disableLLVM := {}'.format(value))
+        elif key == 'disableEscape':
+            out.append('set disableEscape := {}'.format(value))
         else:
             raise Exception('Unkown configuration key: ' + key)
     return out
@@ -81,11 +83,12 @@ configurations = [ ]
 
 for gc in ['immix', 'none', 'boehm']:
     for disableLLVM in ['true', 'false']:
-        for depth in range(3):
-            for maxMethodSize in range(8000, 250000, 2000):
-                for inliningPower in range(11):
-                    inliningThreshold = 2 ** inliningPower
-                    configurations.append(conf(name='GC: {} LLVM: {} Depth: {} MethodSize: {} InliningThreshold: {}'.format(gc, disableLLVM, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM))
+        for disableEscape in ['true', 'false']:
+            for depth in range(3):
+                for maxMethodSize in range(8000, 250000, 2000):
+                    for inliningPower in range(11):
+                        inliningThreshold = 2 ** inliningPower
+                        configurations.append(conf(name='GC: {} LLVM: {} Depth: {} MethodSize: {} InliningThreshold: {}'.format(gc, disableLLVM, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
 
 benchmarks = [
         'bounce',
