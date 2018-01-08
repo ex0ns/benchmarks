@@ -1,10 +1,14 @@
 import scalanative.io.packageNameFromPath
+import scalanative.tools.OptimizerReporter
+import scalanative.sbtplugin.ScalaNativePluginInternal._
 
 enablePlugins(ScalaNativePlugin)
 
 scalaVersion := "2.11.11"
 
 nativeMode := "release"
+
+nativeOptimizerReporter := OptimizerReporter.toDirectory(crossTarget.value)
 
 nativeGC := "immix"
 
