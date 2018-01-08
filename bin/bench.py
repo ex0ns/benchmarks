@@ -1,5 +1,4 @@
 #!/usr/bin/python
-
 import os
 import errno
 import subprocess as subp
@@ -80,42 +79,37 @@ def conf(**kwargs):
     return kwargs
 
 configurations = [ ]
-gc = 'immix'
-disableLLVM = 'true'
-disableEscape = 'false'
-depth = 2
-maxMethodSize = 4096
-inliningThreshold = 128
-configurations.append(conf(name='GC: {} DisableLLVM: {} DisableEscape: {} Depth: {} MethodSize: {} InliningThreshold: {}'.format(gc, disableLLVM, disableEscape, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
+#gc = 'immix'
+#disableLLVM = 'true'
+#disableEscape = 'false'
+#depth = 2
+#maxMethodSize = 4096
+#inliningThreshold = 128
+#configurations.append(conf(name='GC-{}_DisableLLVM-{}_DisableEscape-{}_Depth-{}_MethodSize-{}_InliningThreshold-{}'.format(gc, disableLLVM, disableEscape, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
 
-#for gc in ['immix', 'none', 'boehm']:
-#    for disableLLVM in ['true', 'false']:
-#        for disableEscape in ['true', 'false']:
-#            for depth in range(3):
-#                for maxMethodSize in range(8000, 250000, 2000):
-#                    for inliningPower in range(11):
-#                        inliningThreshold = 2 ** inliningPower
-#                        configurations.append(conf(name='GC: {} DisableLLVM: {} DisableEscape: {} Depth: {} MethodSize: {} InliningThreshold: {}'.format(gc, disableLLVM, disableEscape, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
+for gc in ['immix']:
+    for disableLLVM in ['true', 'false']:
+        for disableEscape in ['true', 'false']:
+            for depth in [2, 4, 8, 16]:
+                for maxMethodSize in [2048, 4096, 16384, 32768]:
+                    for inliningThreshold in [16, 32, 64, 128]:
+                        configurations.append(conf(name='GC-{}_DisableLLVM-{}_DisableEscape-{}_Depth-{}_MethodSize-{}_InliningThreshold-{}'.format(gc, disableLLVM, disableEscape, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
 
 benchmarks = [
         'bounce',
         'brainfuck',
-        'cd',
-        'deltablue',
-        'gcbench',
         'json',
-        'kmeans',
-        'list',
-        'mandelbrot',
-        'nbody',
-        'permute',
+#        'kmeans',
+#        'list',
+#        'nbody',
+#        'permute',
         'queens',
-        'richards',
-        'sudoku',
-        'tracer',
+#        'richards',
+        'sudoku'
+#        'tracer'
 ]
 
-runs = 50
+runs = 10
 
 iterations = 1000
 
