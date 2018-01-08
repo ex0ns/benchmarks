@@ -79,33 +79,25 @@ def conf(**kwargs):
     return kwargs
 
 configurations = [ ]
-#gc = 'immix'
-#disableLLVM = 'true'
-#disableEscape = 'false'
-#depth = 2
-#maxMethodSize = 4096
-#inliningThreshold = 128
-#configurations.append(conf(name='GC-{}_DisableLLVM-{}_DisableEscape-{}_Depth-{}_MethodSize-{}_InliningThreshold-{}'.format(gc, disableLLVM, disableEscape, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
-
-for gc in ['immix']:
-    for disableLLVM in ['true', 'false']:
-        for disableEscape in ['true', 'false']:
-            for depth in [2, 4, 8, 16]:
-                for maxMethodSize in [2048, 4096, 16384, 32768]:
-                    for inliningThreshold in [16, 32, 64, 128]:
-                        configurations.append(conf(name='GC-{}_DisableLLVM-{}_DisableEscape-{}_Depth-{}_MethodSize-{}_InliningThreshold-{}'.format(gc, disableLLVM, disableEscape, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='5.0', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
+gc = 'immix'
+disableLLVM = 'true'
+disableEscape = 'true'
+depth = 2
+maxMethodSize = 2048
+inliningThreshold = 128
+configurations.append(conf(name='GC-{}_DisableLLVM-{}_DisableEscape-{}_Depth-{}_MethodSize-{}_InliningThreshold-{}'.format(gc, disableLLVM, disableEscape, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='5.0', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
 
 benchmarks = [
-        'bounce',
-        'brainfuck',
-        'json',
+        'bounce'
+#        'brainfuck',
+#        'json',
 #        'kmeans',
 #        'list',
 #        'nbody',
 #        'permute',
-        'queens',
+#        'queens',
 #        'richards',
-        'sudoku'
+#        'sudoku'
 #        'tracer'
 ]
 
@@ -120,4 +112,4 @@ if __name__ == "__main__":
             link(bench, conf)
             for runid in xrange(runs):
                 outfile = 'results/{}/{}/{}.data'.format(bench, conf['name'], runid)
-                run(['target/scala-2.11/benchmarks-out', str(iterations), outfile])
+                run(['target/scala-2.11/benchmarks-single-out', str(iterations), outfile])
