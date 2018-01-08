@@ -50,7 +50,7 @@ def settings(conf):
                 f.write('addSbtPlugin("org.scala-native" % "sbt-scala-native" % "{}")'.format(value))
         elif key == 'clang':
             clang = where('clang-{}'.format(value))
-            clangpp = where('clang-++{}'.format(value))
+            clangpp = where('clang++-{}'.format(value))
             out.append('set nativeClang := file("{}")'.format(clang))
             out.append('set nativeClangPP := file("{}")'.format(clangpp))
         elif key == 'scala':
