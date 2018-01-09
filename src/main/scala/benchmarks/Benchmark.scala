@@ -45,6 +45,7 @@ abstract class Benchmark[T]() {
         val end    = System.nanoTime()
 
         success = success && check(result)
+        println(times.size)
         times(i) = end - start
         i = i + 1
       }
