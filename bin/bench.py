@@ -49,8 +49,8 @@ def settings(conf):
             with open('project/plugins.sbt', 'w') as f:
                 f.write('addSbtPlugin("org.scala-native" % "sbt-scala-native" % "{}")'.format(value))
         elif key == 'clang':
-            clang = where('clang{}'.format(value))
-            clangpp = where('clang++{}'.format(value))
+            clang = where('clang-{}'.format(value))
+            clangpp = where('clang++-{}'.format(value))
             out.append('set nativeClang := file("{}")'.format(clang))
             out.append('set nativeClangPP := file("{}")'.format(clangpp))
         elif key == 'scala':
@@ -85,7 +85,7 @@ disableEscape = 'true'
 depth = 2
 maxMethodSize = 2048
 inliningThreshold = 110
-configurations.append(conf(name='GC-{}_DisableLLVM-{}_DisableEscape-{}_Depth-{}_MethodSize-{}_InliningThreshold-{}'.format(gc, disableLLVM, disableEscape, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
+configurations.append(conf(name='GC-{}_DisableLLVM-{}_DisableEscape-{}_Depth-{}_MethodSize-{}_InliningThreshold-{}'.format(gc, disableLLVM, disableEscape, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='5.0', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
 
 #for gc in ['immix']:
 #    for disableLLVM in ['true', 'false']:
@@ -120,4 +120,4 @@ if __name__ == "__main__":
             link(bench, conf)
             for runid in xrange(runs):
                 outfile = 'results/{}/{}/{}.data'.format(bench, conf['name'], runid)
-                run(['target/scala-2.11/benchmarks-out', str(iterations), outfile])
+                run(['target/scala-2.11/benchmarks-single-out', str(iterations), outfile])
