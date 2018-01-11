@@ -34,7 +34,7 @@ def mkdir(path):
 
 def link(bench, conf):
     sbt = where('sbt')
-    command = ['sbt', 'clean']
+    command = ['sbt', '-mem', '10000', 'clean']
     command.append('set nativeBenchmark := "{}"'.format(bench))
     command.extend(settings(conf))
     command.append('nativeLink')
@@ -79,15 +79,7 @@ def conf(**kwargs):
     return kwargs
 
 configurations = [ ]
-#gc = 'immix'
-#disableLLVM = 'true'
-#disableEscape = 'false'
-#depth = 2
-#maxMethodSize = 4096
-#inliningThreshold = 128
-#configurations.append(conf(name='GC-{}_DisableLLVM-{}_DisableEscape-{}_Depth-{}_MethodSize-{}_InliningThreshold-{}'.format(gc, disableLLVM, disableEscape, depth, maxMethodSize, inliningThreshold), native='0.4.0-SNAPSHOT', clang='', scala='2.11.11', mode='release', gc=gc, depth=depth, methodSize=maxMethodSize, inliningThreshold=inliningThreshold, disableLLVM=disableLLVM, disableEscape=disableEscape))
-
-for gc in ['immix']:
+for gc in ['boehm']:
     for disableLLVM in ['true', 'false']:
         for disableEscape in ['true', 'false']:
             for depth in [2, 4, 8, 16]:

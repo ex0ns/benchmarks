@@ -8,7 +8,7 @@ scalaVersion := "2.11.11"
 
 nativeMode := "release"
 
-nativeOptimizerReporter := OptimizerReporter.toDirectory(crossTarget.value)
+//nativeOptimizerReporter := OptimizerReporter.toDirectory(crossTarget.value)
 
 nativeGC := "immix"
 
